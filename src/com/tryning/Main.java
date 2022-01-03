@@ -1,7 +1,6 @@
 package com.tryning;
 
-
-
+import java.security.DomainLoadStoreParameter;
 
 class Player{
     String name;
@@ -13,6 +12,26 @@ class Player{
     Player(String name,double healthy){
         this.name = name;
         this.healty = healthy;
+    }
+
+    void attack(Player enemyPlayer){
+        double attackPower = this.weapon.attackPower;
+        System.out.println(this.name + " Attacking " + enemyPlayer.name + " wuth demage " + attackPower);
+        
+        enemyPlayer.deface(attackPower);
+        
+    }
+    void deface(double attackPower){
+        
+        double demage;
+        if(this.armor.definePower < attackPower){
+            demage = attackPower - this.armor.definePower;
+        }else{
+            demage = 0;
+            System.out.println(this.name + " gots demage " + attackPower);
+        }
+        this.healty -= demage;
+        System.out.println(this.name + " gots demage " + demage);
     }
     void equipWeapon(Weapon weapon){
         this.weapon = weapon;
@@ -28,6 +47,7 @@ class Player{
         this.armor.display();
     }
 }
+
 
 class Weapon{
     double attackPower;
@@ -59,26 +79,34 @@ public class Main {
 
         //cearte Obj player obj player1 || instance obj
         Player player1 = new Player("alliano", 100);
-        Player player2 = new Player("memek", 200);
+        Player player2 = new Player("memek", 100);
 
         // create Obj weapon || instance obj
-        Weapon tor = new Weapon("tor",1000);
-        Weapon pistol = new Weapon("pistol", 100);
+        Weapon tor = new Weapon("tor",100);
+        Weapon pistol = new Weapon("pistol", 30);
 
         // crate obj Armor || instance obj
-        Armor Iron = new Armor("Iron",1000);
-        Armor kayu = new Armor("baju kayu", 100);
+        Armor Iron = new Armor("Iron",100);
+        Armor kayu = new Armor("baju kayu", 20);
         
 
-
+        // player1
         player1.equipWeapon(tor);
         player1.equipArmor(Iron);
-        player1.weapon.display();
         player1.display();
+    
        
+        // player2
         player2.equipWeapon(pistol);
         player2.equipArmor(kayu);
-        player2.weapon.display();
         player2.display();
+      
+        System.out.println("\nBATTLE");
+        System.out.println("\nEPS1");
+        player1.attack(player2);
+        player2.display();
+        System.out.println("\nEPS2\n");
+        player2.attack(player1);
+        player1.display();
     }
 }
